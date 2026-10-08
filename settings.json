@@ -1,87 +1,109 @@
-{
-  "name": "Staf26",
-  "bot-account": {
-    "username": "Staf26",
-    "password": "",
-    "type": "offline"
-  },
-  "server": {
-    "ip": "PZJMsmp.aternos.me",
-    "port": 57574,
-    "version": "26.3",
-    "try-creative": false
-  },
-  "position": {
-    "enabled": true,
-    "x": 0,
-    "y": 100,
-    "z": 0
-  },
-  "utils": {
-    "auto-auth": {
-      "enabled": true,
-      "password": "chalol78"
-    },
-    "anti-afk": {
-      "enabled": true,
-      "sneak": true
-    },
-    "chat-messages": {
-      "enabled": true,
-      "repeat": true,
-      "repeat-delay": 120,
-      "messages": [
-        "I'm a regular player",
-        "Subscribe to Slobos!",
-        "I like to play Minecraft!"
-      ]
-    },
-    "chat-log": true,
-    "auto-reconnect": true,
-    "auto-reconnect-delay": 2000,
-    "max-reconnect-delay": 120000
-  },
-  "movement": {
-    "enabled": true,
-    "circle-walk": {
-      "enabled": true,
-      "radius": 4,
-      "speed": 3000
-    },
-    "look-around": {
-      "enabled": true,
-      "interval": 5000
-    },
-    "random-jump": {
-      "enabled": true,
-      "interval": 10000
-    }
-  },
-  "modules": {
-    "avoidMobs": true,
-    "combat": true,
-    "beds": false,
-    "chat": true,
-    "console-commands": true
-  },
-  "combat": {
-    "attack-mobs": true,
-    "auto-eat": true
-  },
-  "beds": {
-    "pick-up-day": false,
-    "place-night": false
-  },
-  "discord": {
-    "enabled": false,
-    "webhookUrl": "YOUR_DISCORD_WEBHOOK_URL_HERE",
-    "events": {
-      "connect": true,
-      "disconnect": true,
-      "chat": false
-    }
-  },
-  "chat": {
-    "respond": true
-  }
-}
+
+const mineflayer = require("mineflayer");
+
+const bot = mineflayer.createBot({
+    host: "PZJMsmp.aternos.me",
+    port: 25565,
+
+    username: "staff56",
+
+    // Change this to the EXACT version
+    // shown by your Aternos server.
+    version: "26.3",
+
+    // Only use this if your server allows
+    // offline/cracked accounts.
+    auth: "offline"
+});
+
+bot.once("spawn", () => {
+    console.log("================================");
+    console.log("staff56 is ONLINE!");
+    console.log("================================");
+
+    // Simple human-like movement
+    setInterval(() => {
+
+        if (!bot.entity) return;
+
+        const actions = [
+            "forward",
+            "back",
+            "left",
+            "right"
+        ];
+
+        const action =
+            actions[
+                Math.floor(
+                    Math.random() * actions.length
+                )
+            ];
+
+        bot.setControlState(action, true);
+
+        setTimeout(() => {
+
+            if (bot) {
+                bot.setControlState(action, false);
+            }
+
+        }, 1000 + Math.random() * 3000);
+
+    }, 5000);
+});
+
+
+bot.on("chat", (username, message) => {
+
+    if (username === bot.username) return;
+
+    console.log(
+        `${username}: ${message}`
+    );
+
+});
+
+
+bot.on("error", (error) => {
+
+    console.log(
+        "BOT ERROR:",
+        error.message
+    );
+
+});
+
+
+bot.on("kicked", (reason) => {
+
+    console.log(
+        "BOT KICKED:",
+        reason
+    );
+
+});
+
+
+bot.on("end", () => {
+
+    console.log(
+        "Bot disconnected."
+    );
+
+    console.log(
+        "Restarting in 10 seconds..."
+    );
+
+    setTimeout(() => {
+
+        process.exit(1);
+
+    }, 10000);
+});
+
+But there's one problem
+
+Don't upload this and expect it to work with 26.3 yet. The Mineflayer version must actually support the protocol used by your Minecraft server.
+
+If your Aternos version is 26.3, send me a screenshot of the Aternos Software/Version page. I'll tell you exactly what dependency to put in package.json and give you the GitHub-ready files.
